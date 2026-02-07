@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oyun Sonuçları</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        /* Sadece sonuçlar tablosu için stil */
+        #results-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+        #results-table th, #results-table td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: left;
+        }
+        #results-table th {
+            background-color: #03a9f4;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Periyodik Tablo Oyun Sonuçları</h1>
+        <p>Şimdiye kadar oynanmış oyunların skorları aşağıdadır:</p>
+
+        <table id="results-table">
+            <thead>
+                <tr>
+                    <th>Kullanıcı Adı</th>
+                    <th>Tarih</th>
+                    <th>Doğru Sayısı</th>
+                    
+                    <th>Süre (sn)</th>
+                    <th>Sonuç</th>
+                </tr>
+            </thead>
+            <tbody id="results-body">
+                </tbody>
+        </table>
+
+        <a href="index.html" style="margin-top: 20px; display: block;">Ana Menüye Dön</a>
+    </div>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Node.js Backend'in GET API adresi
+        const API_URL = 'http://localhost:3000/api/skor'; 
+        const resultsBody = document.getElementById('results-body');
+
+        // ----------------------------------------------------------------
+        // SKORLARI NODE.JS SUNUCUSUNDAN ÇEKME FONKSİYONU
+        // ----------------------------------------------------------------
+        async function fetchAndDisplayScores() {
+            resultsBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Skorlar yükleniyor...</td></tr>';
+            
+            try {
+                const response = await fetch(API_URL);
+                if (!response.ok) {
+                    throw new Error(`HTTP Hata: ${response.status} - Sunucu çalışmıyor olabilir.`);
+                }
+
+                const scores = await response.json(); // Gelen veriyi al
+
+                resultsBody.innerHTML = ''; // Tabloyu temizle
+
+                if (scores.length === 0) {
+                    resultsBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Henüz kaydedilmiş bir skor yok.</td></tr>';
+                    return;
+                }
+
+                scores.forEach(score => {
+                    const row = resultsBody.insertRow();
+                    
+                    // Backend'den gelen veri formatına uygun başlıklar ve değerler
+                    
+                    // 1. Kullanıcı Adı
+                    row.insertCell().textContent = score.kullanici_adi;
+                    
+                    // 2. Tarih (timestamp objesini sadece tarih olarak gösterelim)
+                    const date = new Date(score.kayit_tarihi);
+                    row.insertCell().textContent = date.toLocaleDateString('tr-TR');
+                    
+                    // 3. Doğru Sayısı
+                    row.insertCell().textContent = score.dogru_sayisi;
+ 
+                    
+                    // 5. Süre
+                    row.insertCell().textContent = score.sure;
+                    
+                    // 6. Sonuç (Doğru sayısı 118 ise kazandı sayılabilir, ama bu veri de VT'de yok)
+                    // Basitçe en yüksek doğru sayısını (118) kazandı kabul edelim.
+                    row.insertCell().textContent = score.dogru_sayisi === 118 ? 'KAZANDI' : 'TAMAMLANDI'; 
+
+                    // Arka Plan Rengi
+                    if (score.dogru_sayisi === 118) {
+                        row.style.backgroundColor = '#e8f5e9'; // Açık yeşil
+                    }
+                });
+
+            } catch (error) {
+                console.error("Skorlar yüklenemedi:", error);
+                resultsBody.innerHTML = '<tr><td colspan="6" style="text-align: center;">Skorlar yüklenirken hata oluştu. Lütfen Node.js sunucusunu kontrol edin.</td></tr>';
+            }
+        }
+
+        fetchAndDisplayScores(); // Sayfa yüklendiğinde skorları çekmeye başla
+    });
+</script>
+</body>
+</html>

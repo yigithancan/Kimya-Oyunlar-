@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bileşik Oluşturma Oyunu</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Bileşik Oluşturma Oyunu</h1>
+        <p>İki elementi seçerek doğru bileşiği oluştur!</p>
+
+        <h3>Elementler:</h3>
+        <div id="elements-container" class="box-container">
+            </div>
+
+        <h3>Oluşturulan Bileşikler:</h3>
+        <div id="compounds-found" class="box-container">
+            </div>
+
+        <div id="compound-feedback"></div>
+
+        <div class="answers-section">
+            <button id="show-answers-btn" class="info-button">Cevapları Göster</button>
+            <div id="answers-panel" class="answers-panel-hidden">
+                <h4>Bu Turdaki Olası Bileşikler:</h4>
+                <ul id="answers-list">
+                    </ul>
+            </div>
+        </div>
+        <a href="index.html">Ana Menüye Dön</a>
+    </div>
+
+    <script src="js/compound_game.js"></script>
+</body>
+</html>

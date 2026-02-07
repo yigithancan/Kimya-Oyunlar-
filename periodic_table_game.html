@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Periyodik Tablo Oyunu</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Periyodik Tablo Oyunu</h1>
+        <p>Bir kutucuk seç ve doğru elementi 15 saniye içinde bul!</p>
+        
+        <div id="game-info">
+            Kalan Yanlış Hakkı: <span id="lives">2</span> | Süre: <span id="timer">15</span>
+        </div>
+
+        <div id="game-container">
+            <div id="periodic-table">
+                </div>
+        </div>
+
+        <div id="question-container" style="display: none;">
+            <h2 id="question-text">Bu element hangisidir?</h2>
+            <div id="options">
+                </div>
+        </div>
+
+        <div id="feedback"></div>
+
+        <a href="index.html">Ana Menüye Dön</a>
+    </div>
+
+    <script src="js/periodic_table_game.js"></script>
+</body>
+</html>

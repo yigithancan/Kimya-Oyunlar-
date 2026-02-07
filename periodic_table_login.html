@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kullanıcı Girişi</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Periyodik Tablo Oyunu Girişi</h1>
+        <p>Lütfen bir kullanıcı adı giriniz:</p>
+        
+        <div class="input-group" style="margin-top: 20px;">
+            <input type="text" id="username-input" placeholder="Kullanıcı adı" style="padding: 10px; border-radius: 8px; border: 1px solid #ccc; width: 250px;">
+            <button id="start-game-btn" class="menu-button" style="margin-top: 15px; display: block; margin-left: auto; margin-right: auto;">Oyuna Başla</button>
+        </div>
+
+        <p id="login-feedback" style="color: red; margin-top: 15px;"></p>
+
+        <a href="index.html" style="margin-top: 20px; display: block;">Ana Menüye Dön</a>
+    </div>
+
+    <script>
+        document.getElementById('start-game-btn').addEventListener('click', () => {
+            const username = document.getElementById('username-input').value.trim();
+            const feedback = document.getElementById('login-feedback');
+            
+            if (username.length > 2) {
+                // Kullanıcı adını geçici olarak sakla
+                localStorage.setItem('currentUser', username);
+                
+                // Oyuna yönlendir
+                window.location.href = 'periodic_table_game.html';
+            } else {
+                feedback.textContent = 'Lütfen en az 3 karakterli bir kullanıcı adı girin.';
+            }
+        });
+    </script>
+</body>
+</html>
